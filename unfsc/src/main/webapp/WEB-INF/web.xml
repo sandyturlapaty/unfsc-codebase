@@ -1,0 +1,32 @@
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	
+	<module-name>UNFSC WebServices</module-name>
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:applicationContext.xml
+			classpath:beans.xml
+		</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>UNFSC</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<init-param>
+		  <param-name>javax.ws.rs.container.ContainerResponseFilter</param-name>
+		  <param-value>corp.ospreys.edu.util.NewCrossOriginResourceSharingFilter</param-value>
+		</init-param>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>UNFSC</servlet-name>
+		<url-pattern>/studentcenter/*</url-pattern>
+	</servlet-mapping>
+</web-app>
