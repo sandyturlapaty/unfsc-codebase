@@ -31,26 +31,62 @@ public class ProfileDetailsDaoImpl implements ProfileDetailsDao{
 		UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
 		PreparedStatement statement = null;
 		Connection conn = null;
-		ProfileDetails details = null;
+		ProfileDetails details = new ProfileDetails();
 		try {
-			//String env = EnvProp.get("app.runtime.env");
-			/*if(StringUtils.isNotEmpty(env) && "local".equalsIgnoreCase(env)){
-				conn = dbUtils.getSSHConnection(logger);
-			} else {
-				conn = dbUtils.getConnection(logger);
-			}*/
 			conn = dbUtils.getConnection(logger);
 			statement = conn.prepareStatement("select * from PROFILE_DETAILS where PROFILE_ID = ?");
 			statement.setString(1, profileId);
 			ResultSet results = statement.executeQuery();
-			/*int size= 0;
-			if (results != null)   
-			{  
-				results.beforeFirst();  
-				results.last();  
-				size = results.getRow();  
-			}  */
-			//System.out.println("results size : "+size);
+			while (results.next()) {
+				details.setProfileId(results.getString("PROFILE_ID"));
+				details.setnNumber(results.getString("N_NUMBER"));
+				details.setName(results.getString("NAME"));
+				details.setEmail(results.getString("EMAIL"));
+				details.setContact(results.getString("CONTACT"));
+				details.setSkills(results.getString("SKILLS"));
+				details.setInterests(results.getString("INTERESTS"));
+				details.setLevel(results.getString("LEVEL"));
+				details.setProgram(results.getString("PROGRAM"));
+				//details.setStartDate(results.getString("START_DATE"));
+				//details.setEndDate(results.getString("END_DATE"));
+				details.setDepartment(results.getString("DEPARTMENT"));
+				details.setThesisTopic(results.getString("THESIS_TOPIC"));
+				details.setThesisAdvisor(results.getString("THESIS_ADVISOR"));
+				details.setCourses(results.getString("COURSES"));
+				details.setCompany(results.getString("COMPANY"));
+				details.setJobTitle(results.getString("JOB_TITLE"));
+				details.setRole(results.getString("ROLE"));
+			}
+			
+		} catch (Exception e) {
+			logger.info("Exception ProfileDetailsDaoImpl : retrieveProfileDetailsById() " + e.getMessage() + " ...ERR");
+			e.printStackTrace();
+			dbUtils.closeConnection(conn, logger);
+		} finally {
+			try {
+				if(null!=statement)
+					statement.close();
+			} catch (SQLException e) {
+				logger.info("Exception ProfileDetailsDaoImpl : retrieveProfileDetailsById() " + e.getMessage() + " ...ERR");
+			}
+			dbUtils.closeConnection(conn, logger);
+		}
+		logger.info("ProfileDetailsDaoImpl : retrieveProfileDetailsById : END");
+		return details;
+	}
+	
+	public ProfileDetails retrieveProfileDetailsByUserId(String userId) {
+		logger.info("ProfileDetailsDaoImpl : retrieveProfileDetailsByUserId : START");
+		logger.info("retrieveProfileDetailsById for the userId : "+userId);
+		UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
+		PreparedStatement statement = null;
+		Connection conn = null;
+		ProfileDetails details = null;
+		try {
+			conn = dbUtils.getConnection(logger);
+			statement = conn.prepareStatement("select * from PROFILE_DETAILS where N_NUMBER = ?");
+			statement.setString(1, userId);
+			ResultSet results = statement.executeQuery();
 			if (null!= results) {
 				details = new ProfileDetails();
 				while (results.next()) {
@@ -76,7 +112,7 @@ public class ProfileDetailsDaoImpl implements ProfileDetailsDao{
 			}
 			
 		} catch (Exception e) {
-			logger.info("Exception ProfileDetailsDaoImpl : retrieveProfileDetailsById() " + e.getMessage() + " ...ERR");
+			logger.info("Exception ProfileDetailsDaoImpl : retrieveProfileDetailsByUserId() " + e.getMessage() + " ...ERR");
 			e.printStackTrace();
 			dbUtils.closeConnection(conn, logger);
 		} finally {
@@ -84,11 +120,11 @@ public class ProfileDetailsDaoImpl implements ProfileDetailsDao{
 				if(null!=statement)
 					statement.close();
 			} catch (SQLException e) {
-				logger.info("Exception ProfileDetailsDaoImpl : retrieveProfileDetailsById() " + e.getMessage() + " ...ERR");
+				logger.info("Exception ProfileDetailsDaoImpl : retrieveProfileDetailsByUserId() " + e.getMessage() + " ...ERR");
 			}
 			dbUtils.closeConnection(conn, logger);
 		}
-		logger.info("ProfileDetailsDaoImpl : retrieveProfileDetailsById : END");
+		logger.info("ProfileDetailsDaoImpl : retrieveProfileDetailsByUserId : END");
 		return details;
 	}
 	

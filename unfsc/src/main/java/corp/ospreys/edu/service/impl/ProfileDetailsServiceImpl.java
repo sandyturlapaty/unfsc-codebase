@@ -32,8 +32,8 @@ public class ProfileDetailsServiceImpl implements ProfileDetailsService {
 	@Override
 	public String createProfileDetails(ProfileDetails profile) {
 		try {
-			ProfileDetails profileDetails = profileDetailsDao.retrieveProfileDetailsById(profile.getProfileId());
-			if(null==profileDetails){
+			ProfileDetails profileDetails = profileDetailsDao.retrieveProfileDetailsById(profile.getnNumber());
+			if(null==profileDetails.getProfileId()){
 				profileDetailsDao.createProfileDetails(profile);
 				return "201";
 			} else {
