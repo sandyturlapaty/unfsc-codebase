@@ -92,4 +92,28 @@ public class ProfileDetailsDaoImpl implements ProfileDetailsDao{
 		return details;
 	}
 	
+	@Override
+	public void createProfileDetails(final ProfileDetails profile) throws SQLException {
+	    UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
+	    Connection conn = dbUtils.getConnection(logger);
+	    PreparedStatement pstmt;
+		pstmt = conn.prepareStatement("insert into PROFILE_DETAILS(N_NUMBER, NAME, EMAIL,CONTACT, LEVEL, PROGRAM, SKILLS, INTERESTS, DEPARTMENT, THESIS_TOPIC, THESIS_ADVISOR, COURSES, COMPANY, JOB_TITLE, ROLE) values (?, ?, ?,?,?,?,?, ?, ?,?,?,?, ?,?,?)");
+	    pstmt.setString(1, profile.getnNumber());
+	    pstmt.setString(2, profile.getName());
+	    pstmt.setString(3, profile.getEmail());
+	    pstmt.setString(4, profile.getContact());
+	    pstmt.setString(5, profile.getLevel());
+	    pstmt.setString(6, profile.getProgram());
+	    pstmt.setString(7, profile.getSkills());
+	    pstmt.setString(8, profile.getInterests());
+	    pstmt.setString(9, profile.getDepartment());
+	    pstmt.setString(10, profile.getThesisTopic());
+	    pstmt.setString(11, profile.getThesisAdvisor());
+	    pstmt.setString(12, profile.getCourses());
+	    pstmt.setString(13, profile.getCompany());
+	    pstmt.setString(14, profile.getJobTitle());
+	    pstmt.setString(15, profile.getRole());
+	    pstmt.executeUpdate();
+	}
+	
 } 

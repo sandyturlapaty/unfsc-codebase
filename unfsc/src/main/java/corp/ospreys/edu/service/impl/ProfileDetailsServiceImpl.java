@@ -29,4 +29,34 @@ public class ProfileDetailsServiceImpl implements ProfileDetailsService {
 		return profileDetails;
 	}
 
+	@Override
+	public String createProfileDetails(ProfileDetails profile) {
+		try {
+			ProfileDetails profileDetails = profileDetailsDao.retrieveProfileDetailsById(profile.getProfileId());
+			if(null==profileDetails){
+				profileDetailsDao.createProfileDetails(profile);
+				return "201";
+			} else {
+				return "403";
+			}
+		} catch (Exception e){
+			return "500";
+		}
+	}
+	
+	@Override
+	public String updateProfileDetails(ProfileDetails profile) {
+		try {
+			ProfileDetails profileDetails = profileDetailsDao.retrieveProfileDetailsById(profile.getProfileId());
+			if(null!=profileDetails){
+				profileDetailsDao.createProfileDetails(profile);
+				return "201";
+			} else {
+				return "404";
+			}
+		} catch (Exception e){
+			return "500";
+		}
+	}
+
 }

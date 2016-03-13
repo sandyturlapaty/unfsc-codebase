@@ -82,15 +82,26 @@ public class UserAuthenticationDaoImpl implements UserAuthenticationDao{
 		}
 		return details;
 	}
-
-	/**@Override
-	public String registerUser(String username, String password) {
+	
+	@Override
+	public String registerUserCredentials(final UserDetails user) {
+		//UnfscUserAuthEncryption encryption = new UnfscUserAuthEncryption();
+	    UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
+	    Connection conn = dbUtils.getConnection(logger);
+	    PreparedStatement pstmt;
 		try {
-			sfimUserEncryption.encrypt(username,password,logger);
-		} catch (Exception e){
-			return "failure";
-		}
-		return "success";
-	}**/
+    		pstmt = conn.prepareStatement("insert into USER_DETAILS(N_NUMBER, PASSWORD, FIRST_NM,LAST_NM, EMAIL) values (?, ?, ?,?,?)");
+		    pstmt.setString(1, user.getUsername());
+		    pstmt.setString(2, user.getPassword());
+		    pstmt.setString(3, user.getFirstName());
+		    pstmt.setString(4, user.getLastName());
+		    pstmt.setString(5, user.getEmail());
+		    pstmt.executeUpdate();
+	    } catch (Exception e) {
+	    	logger.error("Failed to persist " + e.getMessage());
+	    	e.printStackTrace();
+	    }
+	    return "success";
+	}
 	
 } 

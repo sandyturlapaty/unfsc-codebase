@@ -27,7 +27,7 @@ public class UserDetails {
 	/**
 	 * emailAddress
 	 */
-	private String emailAddress;	
+	private String email;	
 	
 	/**
 	 * firstName
@@ -70,14 +70,14 @@ public class UserDetails {
 	}
 
 	/**
-	 * @return emailAddress
+	 * @return email
 	 */
-	public String getEmailAddress() {
-		return emailAddress;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	/**

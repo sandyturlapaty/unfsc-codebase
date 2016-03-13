@@ -4,6 +4,7 @@
 package corp.ospreys.edu.service;
 
 import net.sf.json.JSONObject;
+import corp.ospreys.edu.dto.UserDetails;
 
 
 /**
@@ -14,6 +15,6 @@ public interface UserAuthenticationService {
 	
 	String validateUser(JSONObject userJson);
 
-	String registerUser(JSONObject userJSON);
+	String registerUser(UserDetails user);
 
 } 

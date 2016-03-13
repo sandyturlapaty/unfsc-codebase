@@ -3,6 +3,8 @@
  */
 package corp.ospreys.edu.service.impl;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import corp.ospreys.edu.dao.UserAuthenticationDao;
 import corp.ospreys.edu.dto.UserDetails;
 import corp.ospreys.edu.service.UserAuthenticationService;
 import corp.ospreys.edu.util.UnfscUserAuthEncryption;
-import net.sf.json.JSONObject;
 
 
 /**
@@ -46,20 +47,14 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService{
 	}
 	
 	@Override
-	public String registerUser(JSONObject userJSON) {
+	public String registerUser(UserDetails user) {
 		try {
-			sfimUserEncryption.encrypt(userJSON.getString("username"), userJSON.getString("password"),logger);
+			userAuthenticationDao.registerUserCredentials(user);
 		} catch (Exception e){
 			return "failure";
 		}
 		return "success";
 	}
 	
-	public static void main(String[] args) {
-		Logger logger= Logger.getLogger(UserAuthenticationServiceImpl.class);
-		UnfscUserAuthEncryption encryption = new UnfscUserAuthEncryption();
-		System.out.println(encryption.decrypt("sfimadmin","password".getBytes(),encryption.encrypt("sfimadmin", "Disney", logger), logger));
-	}
-  
 
 } 

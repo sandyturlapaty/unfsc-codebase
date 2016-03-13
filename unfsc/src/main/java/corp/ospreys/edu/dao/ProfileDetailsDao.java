@@ -3,6 +3,8 @@
  */
 package corp.ospreys.edu.dao;
 
+import java.sql.SQLException;
+
 import corp.ospreys.edu.dto.ProfileDetails;
 
 /**
@@ -12,5 +14,7 @@ import corp.ospreys.edu.dto.ProfileDetails;
 public interface ProfileDetailsDao {
 	
 	ProfileDetails retrieveProfileDetailsById(String profileId);
+
+	void createProfileDetails(ProfileDetails profile) throws SQLException;
 
 }

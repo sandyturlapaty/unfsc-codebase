@@ -12,5 +12,9 @@ import corp.ospreys.edu.dto.ProfileDetails;
 public interface ProfileDetailsService {
 	
 	ProfileDetails retrieveProfileById(String profileId);
+	
+	String createProfileDetails(ProfileDetails profile);
+
+	String updateProfileDetails(ProfileDetails profile);
 
 } 

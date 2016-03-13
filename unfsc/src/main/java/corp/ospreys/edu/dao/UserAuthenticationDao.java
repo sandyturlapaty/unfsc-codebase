@@ -14,6 +14,6 @@ public interface UserAuthenticationDao {
 	
 	UserDetails retrieveUser(String username);
 	
-	//String registerUser(String username, String password);
+	String registerUserCredentials(UserDetails user);
 
 } 
