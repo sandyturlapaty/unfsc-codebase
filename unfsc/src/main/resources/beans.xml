@@ -26,6 +26,8 @@
 			<ref bean="validateUserAuthenticationWebService" />
 			<ref bean="registerUnfscUserWebService" />
 			<ref bean="createUnfscUserProfileWebService" />
+			<ref bean="createUnfscEventWebService" />
+			
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>
 			<entry key="xml" value="application/xml" />

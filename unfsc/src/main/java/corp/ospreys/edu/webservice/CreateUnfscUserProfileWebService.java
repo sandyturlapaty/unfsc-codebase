@@ -52,7 +52,7 @@ public class CreateUnfscUserProfileWebService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateUnfscUserProfile(ProfileDetails profile) {
 		logger.info("In CreateUnfscUserProfileWebService class : createUnfscUserProfile method : START");
-		String result  = profileDetailsService.createProfileDetails(profile);
+		String result  = profileDetailsService.updateProfileDetails(profile);
 		logger.info("In CreateUnfscUserProfileWebService class : createUnfscUserProfile method : END");
 		if(StringUtils.isNotEmpty(result) && result.equalsIgnoreCase("201")){
 			return Response.status(Status.CREATED).build();

@@ -129,7 +129,7 @@ public class ProfileDetailsDaoImpl implements ProfileDetailsDao{
 	}
 	
 	@Override
-	public void createProfileDetails(final ProfileDetails profile) throws SQLException {
+	public void createProfileDetails(ProfileDetails profile) throws SQLException {
 	    UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
 	    Connection conn = dbUtils.getConnection(logger);
 	    PreparedStatement pstmt;
