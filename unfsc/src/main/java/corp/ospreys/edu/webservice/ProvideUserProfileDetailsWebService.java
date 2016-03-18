@@ -36,7 +36,11 @@ public class ProvideUserProfileDetailsWebService {
 	public Response retrieveProfileDetailsById(@PathParam("user-id") String userId) {
 		logger.info("In ProvideUserProfileDetailsWebService class : retrieveProfileDetailsById method : START");
 		ProfileDetails details = profileDetailsService.retrieveProfileById(userId);
-		return Response.status(200).entity(details).build();
+		if(null!= details && null != details.getProfileId()){
+			return Response.status(200).entity(details).build();
+		} else {
+			return Response.status(404).build();
+		}
 	}
 
 }
