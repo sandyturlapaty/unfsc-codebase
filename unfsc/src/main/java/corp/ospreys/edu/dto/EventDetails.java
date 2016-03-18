@@ -16,6 +16,7 @@ public class EventDetails {
 	private String ownerContact ;
 	private String userId;
 	private String eventDuration;
+	private String publicInd;
 	/**
 	 * @return the eventName
 	 */
@@ -113,7 +114,19 @@ public class EventDetails {
 		this.eventDuration = eventDuration;
 	}
 	
+	/**
+	 * @return
+	 */
+	public String getPublicInd() {
+		return publicInd;
+	}
 	
+	/**
+	 * @param publicInd
+	 */
+	public void setPublicInd(String publicInd) {
+		this.publicInd = publicInd;
+	}
 	
 }
 

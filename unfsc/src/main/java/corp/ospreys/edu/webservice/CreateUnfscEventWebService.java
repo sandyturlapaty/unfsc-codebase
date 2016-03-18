@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import corp.ospreys.edu.dto.EventDetails;
 import corp.ospreys.edu.service.EventDetailsService;
+import corp.ospreys.edu.util.Emailer;
 
 
 /**
