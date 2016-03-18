@@ -24,8 +24,8 @@ public class ProfileDetailsServiceImpl implements ProfileDetailsService {
 	 * @see corp.ospreys.edu.service.ProfileDetailsService#retrieveProfileById(java.lang.String)
 	 */
 	@Override
-	public ProfileDetails retrieveProfileById(String profileId) {
-		ProfileDetails profileDetails = profileDetailsDao.retrieveProfileDetailsById(profileId);
+	public ProfileDetails retrieveProfileById(String userId) {
+		ProfileDetails profileDetails = profileDetailsDao.retrieveProfileDetailsById(userId);
 		return profileDetails;
 	}
 

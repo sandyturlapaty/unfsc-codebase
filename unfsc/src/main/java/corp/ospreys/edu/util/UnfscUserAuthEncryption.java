@@ -1,8 +1,11 @@
 package corp.ospreys.edu.util;
 
+import java.math.BigDecimal;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -97,8 +100,10 @@ public class UnfscUserAuthEncryption {
 	}	
 
 	public static void main(String[] argv) {
-		Logger logger = Logger.getLogger(UnfscUserAuthEncryption.class);
-		//System.out.println((new UnfscUserAuthEncryption()).encrypt("unf$c!app","Disney2010", logger));
-		System.out.println((new UnfscUserAuthEncryption()).decrypt("unf$c!app",(new UnfscUserAuthEncryption()).encrypt("unf$c!app","Disney2010", logger),  logger));
+		Date lvlEnttlStrtDt= new Date();
+	        final Date currentDate = new Date();
+	        System.out.println(currentDate.getTime());
+	        System.out.println(lvlEnttlStrtDt.getTime());
+	       System.out.println((int) ((currentDate.getTime() - lvlEnttlStrtDt.getTime()) / (1000 * 60 * 60 * 24)));
 	}
 }

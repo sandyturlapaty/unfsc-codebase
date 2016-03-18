@@ -25,17 +25,17 @@ public class ProfileDetailsDaoImpl implements ProfileDetailsDao{
 	private static Logger logger= Logger.getLogger(ProfileDetailsDaoImpl.class);
 
 	@Override
-	public ProfileDetails retrieveProfileDetailsById(String profileId) {
+	public ProfileDetails retrieveProfileDetailsById(String userId) {
 		logger.info("ProfileDetailsDaoImpl : retrieveProfileDetailsById : START");
-		logger.info("retrieveProfileDetailsById for the profileId : "+profileId);
+		logger.info("retrieveProfileDetailsById for the userId : "+userId);
 		UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
 		PreparedStatement statement = null;
 		Connection conn = null;
 		ProfileDetails details = new ProfileDetails();
 		try {
 			conn = dbUtils.getConnection(logger);
-			statement = conn.prepareStatement("select * from PROFILE_DETAILS where PROFILE_ID = ?");
-			statement.setString(1, profileId);
+			statement = conn.prepareStatement("select * from PROFILE_DETAILS where N_NUMBER = ?");
+			statement.setString(1, userId);
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				details.setProfileId(results.getString("PROFILE_ID"));
