@@ -9,6 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +38,9 @@ public class ProvideUserProfileDetailsWebService {
 		logger.info("In ProvideUserProfileDetailsWebService class : retrieveProfileDetailsById method : START");
 		ProfileDetails details = profileDetailsService.retrieveProfileById(userId);
 		if(null!= details && null != details.getProfileId()){
-			return Response.status(200).entity(details).build();
+			return Response.status(Status.OK).entity(details).build();
 		} else {
-			return Response.status(404).build();
+			return Response.status(Status.NOT_FOUND).build();
 		}
 	}
 
