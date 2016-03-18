@@ -41,8 +41,8 @@ public class CreateUnfscUserProfileWebService {
 		logger.info("In CreateUnfscUserProfileWebService class : createUnfscUserProfile method : END");
 		if(StringUtils.isNotEmpty(result) && result.equalsIgnoreCase("201")){
 			return Response.status(Status.CREATED).build();
-		} else if(StringUtils.isNotEmpty(result) && result.equalsIgnoreCase("403")) {
-			return Response.status(Status.FORBIDDEN).build();
+		} else if(StringUtils.isNotEmpty(result) && result.equalsIgnoreCase("404")) {
+			return Response.status(Status.NOT_FOUND).build();
 		} else {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
@@ -51,13 +51,13 @@ public class CreateUnfscUserProfileWebService {
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateUnfscUserProfile(ProfileDetails profile) {
-		logger.info("In CreateUnfscUserProfileWebService class : createUnfscUserProfile method : START");
+		logger.info("In CreateUnfscUserProfileWebService class : updateUnfscUserProfile method : START");
 		String result  = profileDetailsService.updateProfileDetails(profile);
-		logger.info("In CreateUnfscUserProfileWebService class : createUnfscUserProfile method : END");
-		if(StringUtils.isNotEmpty(result) && result.equalsIgnoreCase("201")){
-			return Response.status(Status.CREATED).build();
-		} else if(StringUtils.isNotEmpty(result) && result.equalsIgnoreCase("403")) {
-			return Response.status(Status.FORBIDDEN).build();
+		logger.info("In CreateUnfscUserProfileWebService class : updateUnfscUserProfile method : END");
+		if(StringUtils.isNotEmpty(result) && result.equalsIgnoreCase("204")){
+			return Response.status(Status.NO_CONTENT).build();
+		} else if(StringUtils.isNotEmpty(result) && result.equalsIgnoreCase("404")) {
+			return Response.status(Status.NOT_FOUND).build();
 		} else {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}

@@ -17,4 +17,6 @@ public interface ProfileDetailsDao {
 
 	void createProfileDetails(ProfileDetails profile) throws SQLException;
 
+	void updateProfileDetails(ProfileDetails profile) throws SQLException;
+
 }

@@ -152,4 +152,27 @@ public class ProfileDetailsDaoImpl implements ProfileDetailsDao{
 	    pstmt.executeUpdate();
 	}
 	
+	@Override
+	public void updateProfileDetails(ProfileDetails profile) throws SQLException {
+	    UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
+	    Connection conn = dbUtils.getConnection(logger);
+	    PreparedStatement pstmt;
+		pstmt = conn.prepareStatement("update PROFILE_DETAILS set NAME = ?, CONTACT = ?, LEVEL = ?, PROGRAM = ?, SKILLS = ?, INTERESTS = ?, DEPARTMENT = ?, THESIS_TOPIC = ?, THESIS_ADVISOR = ?, COURSES = ?, COMPANY = ?, JOB_TITLE = ?, ROLE = ? where PROFILE_ID = ?");
+	    pstmt.setString(1, profile.getName());
+	    pstmt.setString(2, profile.getContact());
+	    pstmt.setString(3, profile.getLevel());
+	    pstmt.setString(4, profile.getProgram());
+	    pstmt.setString(5, profile.getSkills());
+	    pstmt.setString(6, profile.getInterests());
+	    pstmt.setString(7, profile.getDepartment());
+	    pstmt.setString(8, profile.getThesisTopic());
+	    pstmt.setString(9, profile.getThesisAdvisor());
+	    pstmt.setString(10, profile.getCourses());
+	    pstmt.setString(11, profile.getCompany());
+	    pstmt.setString(12, profile.getJobTitle());
+	    pstmt.setString(13, profile.getRole());
+	    pstmt.setString(14, profile.getProfileId());
+	    pstmt.executeUpdate();
+	}
+	
 } 
