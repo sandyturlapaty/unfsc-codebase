@@ -48,12 +48,14 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService{
 	
 	@Override
 	public String registerUser(UserDetails user) {
-		try {
-			userAuthenticationDao.registerUserCredentials(user);
-		} catch (Exception e){
-			return "failure";
+		String result = "failure";
+		UserDetails details = userAuthenticationDao.retrieveUser(user.getUsername());
+		if(StringUtils.isEmpty(details.getPassword())){
+			result = userAuthenticationDao.registerUserCredentials(user);
+			return result;
+		} else {
+			return result;
 		}
-		return "success";
 	}
 	
 

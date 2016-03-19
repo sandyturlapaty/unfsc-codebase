@@ -100,6 +100,7 @@ public class UserAuthenticationDaoImpl implements UserAuthenticationDao{
 	    } catch (Exception e) {
 	    	logger.error("Failed to persist " + e.getMessage());
 	    	e.printStackTrace();
+	    	 return "failure";
 	    }
 	    return "success";
 	}
