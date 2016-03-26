@@ -29,7 +29,8 @@ public class EventDetailsDaoImpl implements EventDetailsDao{
 	    UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
 	    Connection conn = dbUtils.getConnection(logger);
 	    PreparedStatement pstmt;
-		pstmt = conn.prepareStatement("insert into EVENT_DETAILS(EVENT_NAME, LOCATION, EVENT_TIME,EVENT_OWNER, EVENT_DESCRIPTION, OWNER_CONTACT, USER_ID, EVENT_DURATION) values (?, ?, ?,?,?,?,?, ?)");
+		pstmt = conn.prepareStatement("insert into EVENT_DETAILS(EVENT_NAME, LOCATION, EVENT_TIME,EVENT_OWNER, EVENT_DESCRIPTION, OWNER_CONTACT, USER_ID, EVENT_DURATION, SEARCH_KEY) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		StringBuffer sb = new StringBuffer();
 	    pstmt.setString(1, event.getEventName());
 	    pstmt.setString(2, event.getEventLocation());
 	    pstmt.setString(3, event.getEventTime());
@@ -38,6 +39,9 @@ public class EventDetailsDaoImpl implements EventDetailsDao{
 	    pstmt.setString(6, event.getOwnerContact());
 	    pstmt.setString(7, event.getUserId());
 	    pstmt.setString(8, event.getEventDuration());
+	    sb.append(event.getEventName()).append("|").append(event.getEventLocation()).append("|")
+	    .append(event.getUserId()).append("|").append(event.getEventDescription());
+	    pstmt.setString(9, sb.toString());
 	    
 	    pstmt.executeUpdate();
 	}

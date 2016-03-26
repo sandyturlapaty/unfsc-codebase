@@ -132,11 +132,14 @@ public class ProfileDetailsDaoImpl implements ProfileDetailsDao{
 	public void createProfileDetails(ProfileDetails profile) throws SQLException {
 	    UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
 	    Connection conn = dbUtils.getConnection(logger);
-	    PreparedStatement pstmt;
-		pstmt = conn.prepareStatement("insert into PROFILE_DETAILS(N_NUMBER, NAME, EMAIL,CONTACT, LEVEL, PROGRAM, SKILLS, INTERESTS, DEPARTMENT, THESIS_TOPIC, THESIS_ADVISOR, COURSES, COMPANY, JOB_TITLE, ROLE) values (?, ?, ?,?,?,?,?, ?, ?,?,?,?, ?,?,?)");
+	    StringBuffer sb = new StringBuffer();
+	    PreparedStatement pstmt = conn.prepareStatement("insert into PROFILE_DETAILS(N_NUMBER, NAME, EMAIL,CONTACT, LEVEL, PROGRAM, SKILLS, INTERESTS, DEPARTMENT, THESIS_TOPIC, THESIS_ADVISOR, COURSES, COMPANY, JOB_TITLE, ROLE, SEARCH_KEY) values (?, ?, ?,?,?,?,?, ?, ?,?,?,?, ?,?,?,?)");
 	    pstmt.setString(1, profile.getnNumber());
+	    sb.append(profile.getnNumber());
 	    pstmt.setString(2, profile.getName());
+	    sb.append("|").append(profile.getName());
 	    pstmt.setString(3, profile.getEmail());
+	    sb.append("|").append(profile.getEmail());
 	    pstmt.setString(4, profile.getContact());
 	    pstmt.setString(5, profile.getLevel());
 	    pstmt.setString(6, profile.getProgram());
@@ -149,6 +152,7 @@ public class ProfileDetailsDaoImpl implements ProfileDetailsDao{
 	    pstmt.setString(13, profile.getCompany());
 	    pstmt.setString(14, profile.getJobTitle());
 	    pstmt.setString(15, profile.getRole());
+	    pstmt.setString(16, sb.toString());
 	    pstmt.executeUpdate();
 	}
 	
@@ -156,22 +160,38 @@ public class ProfileDetailsDaoImpl implements ProfileDetailsDao{
 	public void updateProfileDetails(ProfileDetails profile) throws SQLException {
 	    UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
 	    Connection conn = dbUtils.getConnection(logger);
-	    PreparedStatement pstmt;
-		pstmt = conn.prepareStatement("update PROFILE_DETAILS set NAME = ?, CONTACT = ?, LEVEL = ?, PROGRAM = ?, SKILLS = ?, INTERESTS = ?, DEPARTMENT = ?, THESIS_TOPIC = ?, THESIS_ADVISOR = ?, COURSES = ?, COMPANY = ?, JOB_TITLE = ?, ROLE = ? where PROFILE_ID = ?");
+	    StringBuffer sb = new StringBuffer();
+	    PreparedStatement pstmt = conn.prepareStatement("update PROFILE_DETAILS set NAME = ?, CONTACT = ?, LEVEL = ?, PROGRAM = ?, SKILLS = ?, INTERESTS = ?, DEPARTMENT = ?, THESIS_TOPIC = ?, THESIS_ADVISOR = ?, COURSES = ?, COMPANY = ?, JOB_TITLE = ?, ROLE = ?, SEARCH_KEY = ?  where PROFILE_ID = ?");
+	    sb.append(profile.getnNumber());
 	    pstmt.setString(1, profile.getName());
+	    sb.append("|").append(profile.getName());
+	    pstmt.setString(3, profile.getEmail());
 	    pstmt.setString(2, profile.getContact());
+	    sb.append("|").append(profile.getContact());
 	    pstmt.setString(3, profile.getLevel());
+	    sb.append("|").append(profile.getLevel());
 	    pstmt.setString(4, profile.getProgram());
+	    sb.append("|").append(profile.getProgram());
 	    pstmt.setString(5, profile.getSkills());
+	    sb.append("|").append(profile.getSkills());
 	    pstmt.setString(6, profile.getInterests());
+	    sb.append("|").append(profile.getInterests());
 	    pstmt.setString(7, profile.getDepartment());
+	    sb.append("|").append(profile.getDepartment());
 	    pstmt.setString(8, profile.getThesisTopic());
+	    sb.append("|").append(profile.getThesisTopic());
 	    pstmt.setString(9, profile.getThesisAdvisor());
+	    sb.append("|").append(profile.getThesisAdvisor());
 	    pstmt.setString(10, profile.getCourses());
+	    sb.append("|").append(profile.getCourses());
 	    pstmt.setString(11, profile.getCompany());
+	    sb.append("|").append(profile.getCompany());
 	    pstmt.setString(12, profile.getJobTitle());
+	    sb.append("|").append(profile.getJobTitle());
 	    pstmt.setString(13, profile.getRole());
-	    pstmt.setString(14, profile.getProfileId());
+	    sb.append("|").append(profile.getRole());
+	    pstmt.setString(14, sb.toString());
+	    pstmt.setString(15, profile.getProfileId());
 	    pstmt.executeUpdate();
 	}
 	
