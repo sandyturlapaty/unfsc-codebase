@@ -3,9 +3,8 @@
  */
 package corp.ospreys.edu.service;
 
-import java.util.List;
-
 import corp.ospreys.edu.dto.EventDetails;
+import corp.ospreys.edu.dto.EventListDetails;
 
 /**
  * @author sandyturlapaty
@@ -13,7 +12,7 @@ import corp.ospreys.edu.dto.EventDetails;
  */
 public interface EventDetailsService {
 	
-	List<EventDetails> retrieveEventById(String idValue, String idType);
+	EventListDetails retrieveEventById(String idValue, String idType);
 	
 	String createEvent(EventDetails event);
 

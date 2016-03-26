@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import corp.ospreys.edu.dao.EventDetailsDao;
 import corp.ospreys.edu.dto.EventDetails;
+import corp.ospreys.edu.dto.EventListDetails;
 import corp.ospreys.edu.service.EventDetailsService;
 import corp.ospreys.edu.util.Emailer;
 
@@ -25,9 +26,11 @@ public class EventDetailsServiceImpl implements EventDetailsService {
 	private EventDetailsDao eventDetailsDao;
 
 	@Override
-	public List<EventDetails> retrieveEventById(String idValue, String idType) {
-		// TODO Auto-generated method stub
-		return null;
+	public EventListDetails retrieveEventById(String idValue, String idType) {
+		EventListDetails details = new EventListDetails();
+		List<EventDetails> eventList = eventDetailsDao.retrieveEventById(idValue, idType);
+		details.setEventList(eventList);
+		return details;
 	}
 
 	@Override
@@ -42,6 +45,6 @@ public class EventDetailsServiceImpl implements EventDetailsService {
 			return "400";
 		}
 	}
-
+	
 	
 }

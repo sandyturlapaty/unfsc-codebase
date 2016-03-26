@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import corp.ospreys.edu.dto.SearchDetails;
+import corp.ospreys.edu.dto.SearchDetailsList;
 import corp.ospreys.edu.service.UnfscSearchService;
 
 /**
@@ -45,7 +46,9 @@ public class UnfscSearchWebService {
 		List<SearchDetails> detailList = unfscSearchService.retrieveSearchDetails(value);
 		modifySearchList(detailList, uri);
 		if(null!= detailList && detailList.size()>0){
-			return Response.status(Status.OK).entity(detailList).build();
+			SearchDetailsList resp = new SearchDetailsList();
+			resp.setSearchList(detailList);
+			return Response.status(Status.OK).entity(resp).build();
 		} else {
 			return Response.status(Status.NOT_FOUND).build();
 		}

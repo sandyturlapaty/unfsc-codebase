@@ -10,6 +10,9 @@ public class SearchDetails {
 	
 	private String type;
 	private String url;
+	private String name;
+	private String eventName;
+	private String eventDesc;
 	/**
 	 * @return the type
 	 */
@@ -34,7 +37,42 @@ public class SearchDetails {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	/**
+	 * @return the eventName
+	 */
+	public String getEventName() {
+		return eventName;
+	}
+	/**
+	 * @param eventName the eventName to set
+	 */
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
+	/**
+	 * @return the eventDesc
+	 */
+	public String getEventDesc() {
+		return eventDesc;
+	}
+	/**
+	 * @param eventDesc the eventDesc to set
+	 */
+	public void setEventDesc(String eventDesc) {
+		this.eventDesc = eventDesc;
+	}
 	
 }
 

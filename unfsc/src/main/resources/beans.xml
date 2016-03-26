@@ -27,6 +27,7 @@
 			<ref bean="registerUnfscUserWebService" />
 			<ref bean="createUnfscUserProfileWebService" />
 			<ref bean="createUnfscEventWebService" />
+			<ref bean="provideEventDetailsWebService" />
 			<ref bean="unfscSearchWebService" />
 			
 		</jaxrs:serviceBeans>
