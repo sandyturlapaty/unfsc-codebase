@@ -163,4 +163,30 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 		return eventList;
 	}
 
+	@Override
+	public String approveEvent(String eventId) throws SQLException {
+		UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
+		Connection conn = dbUtils.getConnection(logger);
+		PreparedStatement pstmt = conn.prepareStatement("update EVENT_DETAILS set PUBLIC_IND='yes' where EVENT_ID=?");
+		pstmt.setString(1, eventId);
+		int result = pstmt.executeUpdate();
+		try {
+			if (null != pstmt)
+				pstmt.close();
+		} catch (SQLException e) {
+			logger.info("Exception EventDetailsDaoImpl : approveEvent() "
+					+ e.getMessage() + " ...ERR");
+		}
+		
+		dbUtils.closeConnection(conn, logger);
+		
+		if(result==1)
+		{
+			return "success";
+		}
+		else {
+			return "failure";
+		}
+	}
+
 }

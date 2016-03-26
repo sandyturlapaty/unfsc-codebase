@@ -3,6 +3,7 @@
  */
 package corp.ospreys.edu.service.impl;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -44,6 +45,18 @@ public class EventDetailsServiceImpl implements EventDetailsService {
 		} catch (Exception e){
 			return "400";
 		}
+	}
+
+	@Override
+	public String approveEvent(String eventId) {
+	String x;
+	try {
+		x = eventDetailsDao.approveEvent(eventId);
+	} catch (SQLException e) {
+		e.printStackTrace();
+		x="failure";
+	}
+		return x;
 	}
 	
 	

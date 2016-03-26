@@ -17,6 +17,8 @@ public interface EventDetailsDao {
 	List<EventDetails> retrieveEventById(String idValue, String idType);
 	
 	void createEvent(EventDetails event) throws SQLException;
+	
+	String approveEvent(String eventId) throws SQLException;
 
 
 }

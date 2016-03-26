@@ -16,6 +16,6 @@ public interface EventDetailsService {
 	
 	String createEvent(EventDetails event);
 
-	
+	String approveEvent(String eventId);
 
 } 
