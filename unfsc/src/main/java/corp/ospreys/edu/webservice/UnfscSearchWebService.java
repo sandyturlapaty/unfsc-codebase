@@ -68,7 +68,7 @@ public class UnfscSearchWebService {
 					searchDetails.setUrl(uri+"profile-details/"+nNo);
 				} else if(searchDetails.getType().equalsIgnoreCase("event")){
 					String nNo = searchDetails.getUrl();
-					searchDetails.setUrl(uri+"event-details?N_Number="+nNo);
+					searchDetails.setUrl(uri+"event-details?n_number="+nNo);
 				}
 			}
 		}
