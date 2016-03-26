@@ -33,7 +33,7 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 		Connection conn = dbUtils.getConnection(logger);
 		PreparedStatement pstmt;
 		pstmt = conn
-				.prepareStatement("insert into EVENT_DETAILS(EVENT_NAME, LOCATION, EVENT_TIME,EVENT_OWNER, EVENT_DESCRIPTION, OWNER_CONTACT, USER_ID, EVENT_DURATION, SEARCH_KEY, PUBLIC_IND) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				.prepareStatement("insert into EVENT_DETAILS(EVENT_NAME, LOCATION, EVENT_TIME,EVENT_OWNER, EVENT_DESCRIPTION, OWNER_CONTACT, USER_ID, EVENT_DURATION, SEARCH_KEY, PUBLIC_IND) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 		StringBuffer sb = new StringBuffer();
 		pstmt.setString(1, event.getEventName());
 		pstmt.setString(2, event.getEventLocation());
