@@ -17,6 +17,7 @@ public class EventDetails {
 	private String userId;
 	private String eventDuration;
 	private String publicInd;
+	private String eventId;
 	/**
 	 * @return the eventName
 	 */
@@ -126,6 +127,18 @@ public class EventDetails {
 	 */
 	public void setPublicInd(String publicInd) {
 		this.publicInd = publicInd;
+	}
+	/**
+	 * @return the eventId
+	 */
+	public String getEventId() {
+		return eventId;
+	}
+	/**
+	 * @param eventId the eventId to set
+	 */
+	public void setEventId(String eventId) {
+		this.eventId = eventId;
 	}
 	
 }

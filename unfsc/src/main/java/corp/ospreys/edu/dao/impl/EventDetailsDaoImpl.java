@@ -88,6 +88,7 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 			while (results.next()) {
 				EventDetails details = new EventDetails();
 				details.setEventName(results.getString("EVENT_NAME"));
+				details.setEventId(results.getString("EVENT_ID"));
 				details.setEventLocation(results.getString("LOCATION"));
 				details.setEventTime(results.getString("EVENT_TIME"));
 				details.setEventOwner(results.getString("EVENT_OWNER"));
@@ -133,6 +134,7 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 			while (results.next()) {
 				EventDetails details = new EventDetails();
 				details.setEventName(results.getString("EVENT_NAME"));
+				details.setEventId(results.getString("EVENT_ID"));
 				details.setEventLocation(results.getString("LOCATION"));
 				details.setEventTime(results.getString("EVENT_TIME"));
 				details.setEventOwner(results.getString("EVENT_OWNER"));
