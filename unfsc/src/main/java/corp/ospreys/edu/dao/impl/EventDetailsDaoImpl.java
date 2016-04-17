@@ -27,6 +27,9 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 
 	private static Logger logger = Logger.getLogger(EventDetailsDaoImpl.class);
 
+	/* (non-Javadoc)
+	 * @see corp.ospreys.edu.dao.EventDetailsDao#createEvent(corp.ospreys.edu.dto.EventDetails)
+	 */
 	@Override
 	public void createEvent(EventDetails event) throws SQLException {
 		UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
@@ -57,6 +60,9 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 		pstmt.executeUpdate();
 	}
 
+	/* (non-Javadoc)
+	 * @see corp.ospreys.edu.dao.EventDetailsDao#retrieveEventById(java.lang.String, java.lang.String)
+	 */
 	@Override
 	public List<EventDetails> retrieveEventById(String idValue, String idType) {
 		if (idType.equalsIgnoreCase("n_number")) {
@@ -67,6 +73,10 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 		return null;
 	}
 
+	/**
+	 * @param nNumber
+	 * @return
+	 */
 	private List<EventDetails> retrieveEventbyNnumber(String nNumber) {
 		List<EventDetails> eventList = null;
 		UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
@@ -77,9 +87,10 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 			conn = dbUtils.getConnection(logger);
 			sql = "select * from EVENT_DETAILS where PUBLIC_IND = 'yes'";
 			if(!nNumber.equalsIgnoreCase("all")){
-				sql = "select * from EVENT_DETAILS where USER_ID = ?";
+				sql = "select * from EVENT_DETAILS where EVENT_ID in (select EVENT_ID from EVENT_DETAILS where USER_ID = ? union all select EVENT_ID from EVENT_SUBSCRIPTION_DETAILS where USER_ID = ?)";
 				statement = conn.prepareStatement(sql);
 				statement.setString(1, nNumber);
+				statement.setString(2, nNumber);
 			} else {
 				statement = conn.prepareStatement(sql);
 			}
@@ -119,6 +130,10 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 		return eventList;
 	}
 
+	/**
+	 * @param eventId
+	 * @return
+	 */
 	private List<EventDetails> retrieveEventbyEventid(String eventId) {
 		List<EventDetails> eventList = null;
 		UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
@@ -165,6 +180,9 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 		return eventList;
 	}
 
+	/* (non-Javadoc)
+	 * @see corp.ospreys.edu.dao.EventDetailsDao#approveEvent(java.lang.String)
+	 */
 	@Override
 	public String approveEvent(String eventId) throws SQLException {
 		UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
@@ -189,6 +207,21 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 		else {
 			return "failure";
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see corp.ospreys.edu.dao.EventDetailsDao#subscribeEvent(corp.ospreys.edu.dto.EventDetails)
+	 */
+	@Override
+	public void subscribeEvent(EventDetails event) throws SQLException {
+		UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
+		Connection conn = dbUtils.getConnection(logger);
+		PreparedStatement pstmt;
+		pstmt = conn
+				.prepareStatement("insert into EVENT_SUBSCRIPTION_DETAILS(EVENT_ID, USER_ID) values (?, ?)");
+		pstmt.setString(1, event.getEventId());
+		pstmt.setString(2, event.getUserId());
+		pstmt.executeUpdate();
 	}
 
 }

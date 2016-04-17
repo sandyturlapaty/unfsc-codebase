@@ -30,6 +30,7 @@
 			<ref bean="provideEventDetailsWebService" />
 			<ref bean="unfscSearchWebService" />
 			<ref bean="approveCreateEventWebService"/>
+			<ref bean="subscribeUnfscEventWebService"/>
 			
 		</jaxrs:serviceBeans>
 		<jaxrs:extensionMappings>

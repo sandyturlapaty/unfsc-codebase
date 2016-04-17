@@ -46,6 +46,16 @@ public class EventDetailsServiceImpl implements EventDetailsService {
 			return "400";
 		}
 	}
+	
+	@Override
+	public String subscribeEvent(EventDetails event) {
+		try {
+			eventDetailsDao.subscribeEvent(event);
+			return "201";
+		} catch (Exception e){
+			return "400";
+		}
+	}
 
 	@Override
 	public String approveEvent(String eventId) {

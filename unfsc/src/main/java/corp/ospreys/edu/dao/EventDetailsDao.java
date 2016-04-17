@@ -20,5 +20,7 @@ public interface EventDetailsDao {
 	
 	String approveEvent(String eventId) throws SQLException;
 
+	void subscribeEvent(EventDetails event) throws SQLException;
+
 
 }

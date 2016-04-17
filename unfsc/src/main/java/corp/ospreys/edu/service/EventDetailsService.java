@@ -18,4 +18,6 @@ public interface EventDetailsService {
 
 	String approveEvent(String eventId);
 
+	String subscribeEvent(EventDetails event);
+
 } 
