@@ -4,7 +4,7 @@
 package corp.ospreys.edu.webservice;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.PUT;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
@@ -33,14 +33,14 @@ public class ApproveCreateEventWebService {
 	private EventDetailsService eventDetailsService;
 	
 	
-	@PUT
+	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response approveEvent(@PathParam("event-id") String eventId) {
 		logger.info("In approveCreateEventWebService class : approveEvent method : START");
 		String result  = eventDetailsService.approveEvent(eventId);
 		logger.info("In approveCreateEventWebService class : approveEvent method : END");
 		if(StringUtils.isNotEmpty(result) && result.equalsIgnoreCase("success")){
-			return Response.status(Status.NO_CONTENT).build();
+			return Response.status(Status.OK).build();
 		} else if(StringUtils.isNotEmpty(result) && result.equalsIgnoreCase("failure")) {
 			return Response.status(Status.NOT_FOUND).build();
 		} else {

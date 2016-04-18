@@ -13,6 +13,8 @@ public class SearchDetails {
 	private String name;
 	private String eventName;
 	private String eventDesc;
+	private String eventId;
+	
 	/**
 	 * @return the type
 	 */
@@ -72,6 +74,18 @@ public class SearchDetails {
 	 */
 	public void setEventDesc(String eventDesc) {
 		this.eventDesc = eventDesc;
+	}
+	/**
+	 * @return the eventId
+	 */
+	public String getEventId() {
+		return eventId;
+	}
+	/**
+	 * @param eventId the eventId to set
+	 */
+	public void setEventId(String eventId) {
+		this.eventId = eventId;
 	}
 	
 }

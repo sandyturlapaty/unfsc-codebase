@@ -36,14 +36,14 @@ public class ProvideEventDetailsWebService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response retrieveEventDetailsById(@QueryParam("n_number") String nNumber, 
-			@QueryParam("event_id") String eventId) {
+			@QueryParam("event_id") String eventId, @QueryParam("userName") String userName) {
 		
 		EventListDetails details = null;
 		logger.info("In ProvideEventDetailsWebService class : retrieveEventDetailsById method : START");
 		if(StringUtils.isNotBlank(nNumber)){
-			details = eventDetailsService.retrieveEventById(nNumber, "n_number");
+			details = eventDetailsService.retrieveEventById(nNumber, "n_number", userName);
 		} else if(StringUtils.isNotEmpty(eventId)){
-			details = eventDetailsService.retrieveEventById(eventId, "event_id");
+			details = eventDetailsService.retrieveEventById(eventId, "event_id", null);
 		}
 		if(null!= details.getEventList() && details.getEventList().size()>0){
 			return Response.status(Status.OK).entity(details).build();

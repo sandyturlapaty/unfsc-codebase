@@ -13,6 +13,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.mysql.jdbc.Statement;
+
 import corp.ospreys.edu.dao.EventDetailsDao;
 import corp.ospreys.edu.dto.EventDetails;
 import corp.ospreys.edu.util.EnvProp;
@@ -36,7 +38,7 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 		Connection conn = dbUtils.getConnection(logger);
 		PreparedStatement pstmt;
 		pstmt = conn
-				.prepareStatement("insert into EVENT_DETAILS(EVENT_NAME, LOCATION, EVENT_TIME,EVENT_OWNER, EVENT_DESCRIPTION, OWNER_CONTACT, USER_ID, EVENT_DURATION, SEARCH_KEY, PUBLIC_IND) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				.prepareStatement("insert into EVENT_DETAILS(EVENT_NAME, LOCATION, EVENT_TIME,EVENT_OWNER, EVENT_DESCRIPTION, OWNER_CONTACT, USER_ID, EVENT_DURATION, SEARCH_KEY, PUBLIC_IND) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
 		StringBuffer sb = new StringBuffer();
 		pstmt.setString(1, event.getEventName());
 		pstmt.setString(2, event.getEventLocation());
@@ -49,7 +51,7 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 		sb.append(event.getEventName()).append("|")
 				.append(event.getEventLocation()).append("|")
 				.append(event.getUserId()).append("|")
-				.append(event.getEventDescription());
+				.append(event.getEventDescription()).append("|").append(event.getEventOwner());
 		pstmt.setString(9, sb.toString());
 		if(EnvProp.getAsList("unfsc.admin.user.ids", ",").contains(event.getUserId())){
 			pstmt.setString(10, "yes");
@@ -58,15 +60,20 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 		}
 
 		pstmt.executeUpdate();
+		
+		ResultSet rs = pstmt.getGeneratedKeys();
+		if (null!=rs && rs.next()) {
+		 event.setEventId(String.valueOf(rs.getInt(1)));
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see corp.ospreys.edu.dao.EventDetailsDao#retrieveEventById(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public List<EventDetails> retrieveEventById(String idValue, String idType) {
+	public List<EventDetails> retrieveEventById(String idValue, String idType, String userName) {
 		if (idType.equalsIgnoreCase("n_number")) {
-			return retrieveEventbyNnumber(idValue);
+			return retrieveEventbyNnumber(idValue, userName);
 		} else if (idType.equalsIgnoreCase("event_id")) {
 			return retrieveEventbyEventid(idValue);
 		}
@@ -77,12 +84,14 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 	 * @param nNumber
 	 * @return
 	 */
-	private List<EventDetails> retrieveEventbyNnumber(String nNumber) {
+	private List<EventDetails> retrieveEventbyNnumber(String nNumber, String userName) {
 		List<EventDetails> eventList = null;
+		List<String> subEventList = new ArrayList<String>();
 		UnfscDatabaseUtils dbUtils = new UnfscDatabaseUtils();
 		Connection conn = null;
 		String sql = null;
 		PreparedStatement statement = null;
+		PreparedStatement st = null;
 		try {
 			conn = dbUtils.getConnection(logger);
 			sql = "select * from EVENT_DETAILS where PUBLIC_IND = 'yes'";
@@ -92,6 +101,13 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 				statement.setString(1, nNumber);
 				statement.setString(2, nNumber);
 			} else {
+				String subEventsSql = "select distinct EVENT_ID from EVENT_SUBSCRIPTION_DETAILS where USER_ID = ?";
+				st = conn.prepareStatement(subEventsSql);
+				st.setString(1, userName);
+				ResultSet results = st.executeQuery();
+				while (results.next()) {
+					subEventList.add(results.getString("EVENT_ID"));
+				}
 				statement = conn.prepareStatement(sql);
 			}
 			eventList = new ArrayList<EventDetails>();
@@ -108,6 +124,11 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 				details.setOwnerContact(results.getString("OWNER_CONTACT"));
 				details.setUserId(results.getString("USER_ID"));
 				details.setEventDuration(results.getString("EVENT_DURATION"));
+				if(subEventList.contains(details.getEventId())){
+					details.setSubscribeInd("yes");
+				} else {
+					details.setSubscribeInd("no");
+				}
 				eventList.add(details);
 			}
 
@@ -120,6 +141,8 @@ public class EventDetailsDaoImpl implements EventDetailsDao {
 			try {
 				if (null != statement)
 					statement.close();
+				if (null != st)
+					st.close();
 			} catch (SQLException e) {
 				logger.info("Exception EventDetailsDaoImpl : retrieveEventbyNnumber() "
 						+ e.getMessage() + " ...ERR");

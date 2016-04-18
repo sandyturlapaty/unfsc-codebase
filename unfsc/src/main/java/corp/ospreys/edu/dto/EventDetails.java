@@ -18,6 +18,20 @@ public class EventDetails {
 	private String eventDuration;
 	private String publicInd;
 	private String eventId;
+	private String subscribeInd;
+	
+	/**
+	 * @return the subscribeInd
+	 */
+	public String getSubscribeInd() {
+		return subscribeInd;
+	}
+	/**
+	 * @param subscribeInd the subscribeInd to set
+	 */
+	public void setSubscribeInd(String subscribeInd) {
+		this.subscribeInd = subscribeInd;
+	}
 	/**
 	 * @return the eventName
 	 */

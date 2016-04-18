@@ -27,19 +27,20 @@ public class EventDetailsServiceImpl implements EventDetailsService {
 	private EventDetailsDao eventDetailsDao;
 
 	@Override
-	public EventListDetails retrieveEventById(String idValue, String idType) {
+	public EventListDetails retrieveEventById(String idValue, String idType, String userName) {
 		EventListDetails details = new EventListDetails();
-		List<EventDetails> eventList = eventDetailsDao.retrieveEventById(idValue, idType);
+		List<EventDetails> eventList = eventDetailsDao.retrieveEventById(idValue, idType, userName);
 		details.setEventList(eventList);
 		return details;
 	}
 
 	@Override
-	public String createEvent(EventDetails event) {
+	public String createEvent(EventDetails event, String uri) {
 		try {
 			eventDetailsDao.createEvent(event);
 			if(StringUtils.isNotEmpty(event.getPublicInd()) && "yes".equalsIgnoreCase(event.getPublicInd())){
-				Emailer.triggerEmail("New Event Request", "Name : "+event.getEventName()+ "  Event Location : "+event.getEventLocation());
+				String approveUrl = uri+"approve-event/"+event.getEventId();
+				Emailer.triggerEmail("New Event Request", "Name : "+event.getEventName()+ "  Event Location : "+event.getEventLocation() + " Approve : "+approveUrl);
 			}
 			return "201";
 		} catch (Exception e){

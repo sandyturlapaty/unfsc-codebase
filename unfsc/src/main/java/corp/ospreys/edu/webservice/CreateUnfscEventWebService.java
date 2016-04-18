@@ -6,8 +6,10 @@ package corp.ospreys.edu.webservice;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.lang.StringUtils;
@@ -35,9 +37,10 @@ public class CreateUnfscEventWebService {
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createUnfscEvent(EventDetails event) {
+	public Response createUnfscEvent(EventDetails event, @Context final UriInfo uriInfo) {
 		logger.info("In CreateUnfscEventWebService class : createUnfscEvent method : START");
-		String result  = eventDetailsService.createEvent(event);
+		final String uri = uriInfo.getBaseUri().toString();
+		String result  = eventDetailsService.createEvent(event, uri);
 		logger.info("In CreateUnfscEventWebService class : createUnfscEvent method : END");
 		if(StringUtils.isNotEmpty(result) && result.equalsIgnoreCase("201")){
 			return Response.status(Status.CREATED).build();

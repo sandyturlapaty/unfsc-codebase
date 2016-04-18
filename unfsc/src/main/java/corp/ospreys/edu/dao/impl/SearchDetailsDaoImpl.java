@@ -89,13 +89,14 @@ public class SearchDetailsDaoImpl implements SearchDetailsDao {
 		List<SearchDetails> detailsList = new ArrayList<SearchDetails>();
 		try {
 			conn = dbUtils.getConnection(logger);
-			statement = conn.prepareStatement("select USER_ID,EVENT_NAME, EVENT_DESCRIPTION, EVENT_OWNER from EVENT_DETAILS where SEARCH_KEY like ?");
+			statement = conn.prepareStatement("select EVENT_ID, USER_ID,EVENT_NAME, EVENT_DESCRIPTION, EVENT_OWNER from EVENT_DETAILS where SEARCH_KEY like ?");
 			statement.setString(1, "%"+value+"%");
 			ResultSet results = statement.executeQuery();
 			while (results.next()) {
 				SearchDetails details = new SearchDetails();
 				details.setUrl(results.getString("USER_ID"));
 				details.setType("event");
+				details.setEventId(results.getString("EVENT_ID"));
 				details.setEventName(results.getString("EVENT_NAME"));
 				details.setEventDesc(results.getString("EVENT_DESCRIPTION"));
 				details.setName(results.getString("EVENT_OWNER"));
