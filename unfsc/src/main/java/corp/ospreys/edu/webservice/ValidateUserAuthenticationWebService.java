@@ -38,7 +38,7 @@ public class ValidateUserAuthenticationWebService {
 		System.out.println(result);
 		System.out.println(userJson);
 		logger.info("In ValidateUserAuthenticationWebServiceImpl class : validateSFIMUserCredentials method : END");
-		return Response.status(Integer.parseInt(result)).header("Access-Control-Allow-Origin","http://192.168.3.104:8080/unfsc/").build();
+		return Response.status(Integer.parseInt(result)).build();
 	}
 
 }
